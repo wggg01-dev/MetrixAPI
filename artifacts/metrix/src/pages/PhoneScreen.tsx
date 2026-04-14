@@ -39,7 +39,7 @@ export function PhoneScreen({ onNext, onBack }: PhoneScreenProps) {
 
       <div className="relative z-10 w-full max-w-sm animate-fade-up">
         <div className="text-center mb-6">
-          <h1 className="text-2xl font-bold text-white tracking-tight">Metrix</h1>
+          <h1 className="text-2xl font-bold text-white tracking-tight">Smartmonie</h1>
         </div>
 
         <div className="glass-card rounded-3xl p-8 shadow-2xl">

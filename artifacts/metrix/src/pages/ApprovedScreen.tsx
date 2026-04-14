@@ -12,6 +12,8 @@ export function ApprovedScreen({ bank, amount, onNext }: ApprovedScreenProps) {
   const [showContent, setShowContent] = useState(false);
   const [particles, setParticles] = useState<{ x: number; y: number; color: string; size: number; delay: number }[]>([]);
 
+  const cashback = Math.round(Number(amount) * 0.015);
+
   useEffect(() => {
     const colors = ["#3b82f6", "#22c55e", "#f59e0b", "#8b5cf6", "#ef4444", "#06b6d4"];
     const ps = Array.from({ length: 20 }, (_, i) => ({
@@ -49,7 +51,7 @@ export function ApprovedScreen({ bank, amount, onNext }: ApprovedScreenProps) {
 
       <div className="relative z-10 w-full max-w-sm">
         <div className="text-center mb-6">
-          <h1 className="text-2xl font-bold text-white tracking-tight">Metrix</h1>
+          <h1 className="text-2xl font-bold text-white tracking-tight">Smartmonie</h1>
         </div>
 
         <div className={`glass-card rounded-3xl p-8 shadow-2xl transition-all duration-500 ${showContent ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
@@ -66,6 +68,7 @@ export function ApprovedScreen({ bank, amount, onNext }: ApprovedScreenProps) {
               <h2 className="text-2xl font-bold text-foreground mb-1">Payment Approved!</h2>
               <p className="text-3xl font-bold text-green-600 mt-2">₦{Number(amount).toLocaleString("en-NG")}</p>
               <p className="text-sm text-muted-foreground mt-1">Successfully debited from {bank.name}</p>
+              <p className="text-xs text-muted-foreground/70 mt-0.5">Processed by Metrix</p>
             </div>
           </div>
 
@@ -77,14 +80,14 @@ export function ApprovedScreen({ bank, amount, onNext }: ApprovedScreenProps) {
               <div>
                 <div className="flex items-center gap-1.5 mb-1">
                   <Star className="w-3.5 h-3.5 text-amber-500 fill-amber-500" />
-                  <span className="text-xs font-bold text-amber-700 uppercase tracking-wider">Special Discount!</span>
+                  <span className="text-xs font-bold text-amber-700 uppercase tracking-wider">1.5% Cashback Earned!</span>
                 </div>
                 <p className="text-sm font-bold text-amber-900 leading-snug">
                   Congratulations, you've received{" "}
-                  <span className="text-amber-600">₦20,000</span>{" "}
+                  <span className="text-amber-600">₦{cashback.toLocaleString("en-NG")}</span>{" "}
                   cashback for all purchases.
                 </p>
-                <p className="text-xs text-amber-700 mt-1">Credited to your wallet instantly!</p>
+                <p className="text-xs text-amber-700 mt-1">Credited to your Smartmonie wallet instantly!</p>
               </div>
             </div>
           </div>

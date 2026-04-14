@@ -18,8 +18,8 @@ pnpm workspace monorepo using TypeScript. Each package manages its own dependenc
 
 ## Artifacts
 
-### Metrix (artifacts/metrix) — `previewPath: /`
-Biometric merchant payment app built with React + Vite. Full payment flow UI:
+### Smartmonie (artifacts/metrix) — `previewPath: /`
+Biometric merchant payment app built with React + Vite. Payment processed by Metrix. Full payment flow UI:
 - Face verification screen with animated scanner
 - BVN phone number input
 - Authenticating User Data screen with step-by-step progress

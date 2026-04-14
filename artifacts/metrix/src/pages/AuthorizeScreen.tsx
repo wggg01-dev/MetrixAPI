@@ -34,7 +34,7 @@ export function AuthorizeScreen({ onNext }: AuthorizeScreenProps) {
             <div className="w-10 h-10 gradient-primary rounded-xl flex items-center justify-center shadow-lg">
               <Zap className="w-5 h-5 text-white" />
             </div>
-            <h1 className="text-2xl font-bold text-white tracking-tight">Metrix</h1>
+            <h1 className="text-2xl font-bold text-white tracking-tight">Smartmonie</h1>
           </div>
           <p className="text-blue-200 text-sm">Biometric Merchant Payments</p>
         </div>
@@ -94,7 +94,7 @@ export function AuthorizeScreen({ onNext }: AuthorizeScreenProps) {
         </div>
 
         <p className="text-center text-blue-200/60 text-xs mt-6">
-          Powered by Metrix Secure Biometrics
+          Powered by Smartmonie · Processed by Metrix
         </p>
       </div>
     </div>

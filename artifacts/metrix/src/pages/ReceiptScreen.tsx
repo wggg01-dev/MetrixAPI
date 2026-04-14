@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Printer, Download, CheckCircle, Share2, Home, Trophy } from "lucide-react";
+import { Printer, CheckCircle, Home, Trophy, Zap } from "lucide-react";
 import { type Bank } from "../data/banks";
 import { USER_BVN_DATA, PURCHASE_ITEMS } from "../data/banks";
 
@@ -20,7 +20,7 @@ function formatTime(date: Date) {
 
 function generateRef() {
   const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-  return "MTX" + Array.from({ length: 12 }, () => chars[Math.floor(Math.random() * chars.length)]).join("");
+  return "SMN" + Array.from({ length: 12 }, () => chars[Math.floor(Math.random() * chars.length)]).join("");
 }
 
 export function ReceiptScreen({ bank, amount, narration, onDone }: ReceiptScreenProps) {
@@ -29,9 +29,10 @@ export function ReceiptScreen({ bank, amount, narration, onDone }: ReceiptScreen
   const [isPrinting, setIsPrinting] = useState(false);
 
   const subtotal = PURCHASE_ITEMS.reduce((sum, item) => sum + item.qty * item.unitPrice, 0);
-  const discount = 20000;
   const vat = Math.round(subtotal * 0.075);
-  const total = subtotal + vat - discount;
+  const processingFee = Math.round(subtotal * 0.03);
+  const cashback = Math.round(subtotal * 0.015);
+  const total = subtotal + vat + processingFee - cashback;
 
   const handlePrint = () => {
     setIsPrinting(true);
@@ -50,7 +51,7 @@ export function ReceiptScreen({ bank, amount, narration, onDone }: ReceiptScreen
 
       <div className="relative z-10 w-full max-w-sm pt-4">
         <div className="text-center mb-4">
-          <h1 className="text-2xl font-bold text-white tracking-tight">Metrix</h1>
+          <h1 className="text-2xl font-bold text-white tracking-tight">Smartmonie</h1>
         </div>
 
         <div className="no-print flex gap-2 mb-4">
@@ -76,20 +77,26 @@ export function ReceiptScreen({ bank, amount, narration, onDone }: ReceiptScreen
         </div>
 
         <div className="receipt-container receipt-paper rounded-2xl shadow-2xl overflow-hidden border border-gray-200 animate-fade-up">
+          {/* Header */}
           <div className="gradient-primary px-6 py-5 text-center">
-            <div className="flex items-center justify-center gap-2 mb-2">
+            <div className="flex items-center justify-center gap-2 mb-1">
               <div className="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center">
                 <CheckCircle className="w-5 h-5 text-white" />
               </div>
-              <span className="text-xl font-bold text-white tracking-tight">METRIX</span>
+              <span className="text-xl font-bold text-white tracking-tight">SMARTMONIE</span>
             </div>
-            <p className="text-blue-100 text-xs font-medium uppercase tracking-widest">Payment Receipt</p>
-            <div className="mt-3 bg-white/20 rounded-xl px-4 py-2">
+            <div className="flex items-center justify-center gap-1 mb-3">
+              <Zap className="w-3 h-3 text-blue-200" />
+              <p className="text-blue-200 text-xs font-medium">Processed by Metrix</p>
+            </div>
+            <p className="text-blue-100 text-xs font-medium uppercase tracking-widest mb-2">Payment Receipt</p>
+            <div className="bg-white/20 rounded-xl px-4 py-2">
               <p className="text-white text-2xl font-bold">₦{Number(amount).toLocaleString("en-NG")}</p>
-              <p className="text-blue-100 text-xs mt-0.5">Total Payment</p>
+              <p className="text-blue-100 text-xs mt-0.5">Total Amount Paid</p>
             </div>
           </div>
 
+          {/* Status & Date */}
           <div className="px-6 py-4 border-b border-dashed border-gray-300">
             <div className="flex justify-between items-center">
               <div>
@@ -107,11 +114,13 @@ export function ReceiptScreen({ bank, amount, narration, onDone }: ReceiptScreen
             </div>
           </div>
 
+          {/* Transaction Details */}
           <div className="px-6 py-3 border-b border-dashed border-gray-300 space-y-2">
             {[
               { label: "Transaction Ref", value: txRef },
-              { label: "Merchant", value: "Metrix Merchant Store" },
-              { label: "Terminal ID", value: "MTX-TRM-00124" },
+              { label: "Merchant", value: "Smartmonie Merchant Store" },
+              { label: "Payment Processor", value: "Metrix Payments Ltd" },
+              { label: "Terminal ID", value: "SMN-TRM-00124" },
               { label: "Bank", value: bank.name },
               { label: "Account", value: "XXXX XXXX XX45" },
               { label: "Payment Method", value: "Biometric (BVN)" },
@@ -124,13 +133,14 @@ export function ReceiptScreen({ bank, amount, narration, onDone }: ReceiptScreen
             ))}
           </div>
 
+          {/* Customer Info */}
           <div className="px-6 py-3 border-b border-dashed border-gray-300">
             <p className="text-xs font-bold text-gray-700 uppercase tracking-wider mb-3">Customer Information</p>
             {[
               { label: "Name", value: USER_BVN_DATA.fullName },
               { label: "Phone", value: USER_BVN_DATA.phone },
               { label: "Email", value: USER_BVN_DATA.email },
-              { label: "BVN Status", value: "Verified" },
+              { label: "BVN Status", value: "Verified ✓" },
             ].map(({ label, value }) => (
               <div key={label} className="flex justify-between items-center mb-1.5">
                 <span className="text-xs text-gray-500">{label}</span>
@@ -139,13 +149,14 @@ export function ReceiptScreen({ bank, amount, narration, onDone }: ReceiptScreen
             ))}
           </div>
 
+          {/* Items */}
           <div className="px-6 py-3 border-b border-dashed border-gray-300">
             <p className="text-xs font-bold text-gray-700 uppercase tracking-wider mb-3">Items Purchased</p>
-            <div className="space-y-0">
+            <div>
               <div className="flex text-xs text-gray-500 font-semibold uppercase tracking-wider mb-2 pb-1 border-b border-gray-200">
                 <span className="flex-1">Item</span>
                 <span className="w-8 text-center">Qty</span>
-                <span className="w-20 text-right">Unit Price</span>
+                <span className="w-20 text-right">Unit</span>
                 <span className="w-24 text-right">Amount</span>
               </div>
               {PURCHASE_ITEMS.map((item, i) => (
@@ -164,6 +175,7 @@ export function ReceiptScreen({ bank, amount, narration, onDone }: ReceiptScreen
             </div>
           </div>
 
+          {/* Totals */}
           <div className="px-6 py-3 border-b border-dashed border-gray-300 space-y-1.5">
             <div className="flex justify-between">
               <span className="text-xs text-gray-500">Subtotal</span>
@@ -173,33 +185,45 @@ export function ReceiptScreen({ bank, amount, narration, onDone }: ReceiptScreen
               <span className="text-xs text-gray-500">VAT (7.5%)</span>
               <span className="text-xs font-semibold text-gray-800">₦{vat.toLocaleString()}</span>
             </div>
-            <div className="flex justify-between">
-              <span className="text-xs text-gray-500">Transaction Fee</span>
-              <span className="text-xs font-semibold text-green-600">₦0.00</span>
+
+            {/* Metrix Processing Fee — highlighted for transparency */}
+            <div className="flex justify-between items-center bg-blue-50 border border-blue-100 rounded-lg px-2 py-1.5">
+              <div className="flex items-center gap-1.5">
+                <Zap className="w-3 h-3 text-blue-500" />
+                <span className="text-xs text-blue-700 font-semibold">Metrix Processing Fee (3%)</span>
+              </div>
+              <span className="text-xs font-bold text-blue-700">+₦{processingFee.toLocaleString()}</span>
             </div>
-            <div className="flex justify-between items-center bg-amber-50 rounded-lg px-2 py-1.5">
+
+            {/* Cashback */}
+            <div className="flex justify-between items-center bg-amber-50 border border-amber-100 rounded-lg px-2 py-1.5">
               <div className="flex items-center gap-1">
                 <Trophy className="w-3 h-3 text-amber-500" />
-                <span className="text-xs text-amber-700 font-semibold">Loyalty Discount</span>
+                <span className="text-xs text-amber-700 font-semibold">Smartmonie Cashback (1.5%)</span>
               </div>
-              <span className="text-xs font-bold text-amber-700">-₦{discount.toLocaleString()}</span>
+              <span className="text-xs font-bold text-amber-700">-₦{cashback.toLocaleString()}</span>
             </div>
-            <div className="flex justify-between items-center border-t border-gray-300 pt-2">
-              <span className="text-sm font-bold text-gray-800">TOTAL</span>
+
+            <div className="flex justify-between items-center border-t-2 border-gray-300 pt-2">
+              <span className="text-sm font-bold text-gray-800">TOTAL PAID</span>
               <span className="text-sm font-bold text-gray-900">₦{total.toLocaleString()}</span>
             </div>
           </div>
 
+          {/* Cashback Banner */}
           <div className="px-6 py-3 bg-gradient-to-r from-amber-50 to-yellow-50 border-b border-dashed border-gray-300">
             <div className="flex items-start gap-2">
               <Trophy className="w-4 h-4 text-amber-500 flex-shrink-0 mt-0.5" />
               <div>
                 <p className="text-xs font-bold text-amber-800">Congratulations!</p>
-                <p className="text-xs text-amber-700">You've received ₦20,000 cashback for all purchases. Credited to your Metrix wallet.</p>
+                <p className="text-xs text-amber-700">
+                  You've received <span className="font-bold">₦{cashback.toLocaleString()}</span> (1.5%) cashback for all purchases. Credited to your Smartmonie wallet.
+                </p>
               </div>
             </div>
           </div>
 
+          {/* QR Code */}
           <div className="px-6 py-4 text-center">
             <div className="w-24 h-24 mx-auto mb-3 bg-gray-100 rounded-lg flex items-center justify-center">
               <div className="grid grid-cols-5 gap-0.5">
@@ -216,10 +240,14 @@ export function ReceiptScreen({ bank, amount, narration, onDone }: ReceiptScreen
             <p className="text-xs font-mono text-gray-400 mt-1">{txRef}</p>
           </div>
 
-          <div className="bg-gray-800 px-6 py-3 text-center">
-            <p className="text-xs text-gray-400">Powered by Metrix Biometric Payments</p>
-            <p className="text-xs text-gray-500 mt-0.5">www.metrix.ng | support@metrix.ng</p>
-            <p className="text-xs text-gray-600 mt-1">Licensed by CBN | NDIC Insured</p>
+          {/* Footer */}
+          <div className="bg-gray-800 px-6 py-4 text-center">
+            <p className="text-xs font-semibold text-gray-300">Smartmonie</p>
+            <p className="text-xs text-gray-400 mt-0.5">Payment processed by Metrix Payments Ltd</p>
+            <div className="border-t border-gray-700 mt-2 pt-2">
+              <p className="text-xs text-gray-500">www.smartmonie.ng | support@smartmonie.ng</p>
+              <p className="text-xs text-gray-600 mt-0.5">Licensed by CBN · NDIC Insured · Powered by Metrix</p>
+            </div>
           </div>
         </div>
 
