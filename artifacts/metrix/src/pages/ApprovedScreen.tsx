@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import { CheckCircle, ChevronRight, Trophy, Star } from "lucide-react";
+import { CheckCircle, ChevronRight, Trophy, Star, MessageCircle, Phone } from "lucide-react";
 import { type Bank } from "../data/banks";
+import { USER_BVN_DATA } from "../data/banks";
 
 interface ApprovedScreenProps {
   bank: Bank;
@@ -51,7 +52,12 @@ export function ApprovedScreen({ bank, amount, onNext }: ApprovedScreenProps) {
 
       <div className="relative z-10 w-full max-w-sm sm:max-w-md">
         <div className="text-center mb-6">
-          <h1 className="text-2xl font-bold text-white tracking-tight">Smartmonie</h1>
+          <div className="flex items-center justify-center gap-2">
+            <div className="w-8 h-8 gradient-primary rounded-lg flex items-center justify-center shadow-md">
+              <CheckCircle className="w-4 h-4 text-white" />
+            </div>
+            <h1 className="text-xl font-bold text-white tracking-tight">Smartmonie</h1>
+          </div>
         </div>
 
         <div className={`glass-card rounded-3xl p-8 shadow-2xl transition-all duration-500 ${showContent ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
@@ -103,6 +109,19 @@ export function ApprovedScreen({ bank, amount, onNext }: ApprovedScreenProps) {
 
             <p className="text-center text-xs text-muted-foreground">
               Receipt automatically sent to your email
+            </p>
+            <div className="flex items-center justify-center gap-2 mt-2">
+              <div className="flex items-center gap-1.5 bg-green-500/10 text-green-700 rounded-full px-3 py-1">
+                <MessageCircle className="w-3 h-3" />
+                <span className="text-xs font-medium">WhatsApp</span>
+              </div>
+              <div className="flex items-center gap-1.5 bg-blue-500/10 text-blue-700 rounded-full px-3 py-1">
+                <Phone className="w-3 h-3" />
+                <span className="text-xs font-medium">SMS</span>
+              </div>
+            </div>
+            <p className="text-center text-xs text-muted-foreground/70 mt-1">
+              Also sent via WhatsApp &amp; SMS to {USER_BVN_DATA.phone}
             </p>
           </div>
         </div>

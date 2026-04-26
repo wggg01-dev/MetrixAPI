@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ArrowLeft, Shield, Fingerprint } from "lucide-react";
+import { ArrowLeft, Shield, Fingerprint, Store, CheckCircle } from "lucide-react";
 import { FingerprintScanner } from "../components/FingerprintScanner";
 import { type Bank } from "../data/banks";
 
@@ -32,7 +32,12 @@ export function BiometricConfirmScreen({ bank, amount, narration, onNext, onBack
 
       <div className="relative z-10 w-full max-w-sm sm:max-w-md animate-fade-up">
         <div className="text-center mb-6">
-          <h1 className="text-2xl font-bold text-white tracking-tight">Smartmonie</h1>
+          <div className="flex items-center justify-center gap-2">
+            <div className="w-8 h-8 gradient-primary rounded-lg flex items-center justify-center shadow-md">
+              <CheckCircle className="w-4 h-4 text-white" />
+            </div>
+            <h1 className="text-xl font-bold text-white tracking-tight">Smartmonie</h1>
+          </div>
         </div>
 
         <div className="glass-card rounded-3xl p-6 shadow-2xl">
@@ -41,16 +46,22 @@ export function BiometricConfirmScreen({ bank, amount, narration, onNext, onBack
             Back
           </button>
 
-          <div className="text-center mb-6">
-            <div className="inline-flex items-center gap-2 bg-primary/10 text-primary rounded-full px-4 py-1.5 mb-3">
-              <Shield className="w-3.5 h-3.5" />
-              <span className="text-xs font-semibold uppercase tracking-wider">Biometric Confirmation</span>
+          <div className="text-center mb-5">
+            <div className="inline-flex items-center gap-2 bg-amber-500/10 text-amber-600 rounded-full px-4 py-1.5 mb-3">
+              <Store className="w-3.5 h-3.5" />
+              <span className="text-xs font-semibold uppercase tracking-wider">Merchant Authorization</span>
             </div>
-            <h2 className="text-xl font-bold text-foreground mb-1">Confirm Payment</h2>
-            <p className="text-sm text-muted-foreground">Authenticate with your fingerprint to complete payment</p>
+            <h2 className="text-xl font-bold text-foreground mb-1">Merchant Confirmation</h2>
+            <p className="text-sm text-muted-foreground">
+              The merchant must authorize this transaction on their POS device to complete the payment
+            </p>
           </div>
 
-          <div className="bg-primary/5 border border-primary/20 rounded-2xl p-4 mb-6 space-y-2">
+          <div className="bg-amber-500/5 border border-amber-500/20 rounded-2xl p-4 mb-5 space-y-2">
+            <div className="flex items-center gap-2 mb-3">
+              <Store className="w-4 h-4 text-amber-600" />
+              <span className="text-xs font-semibold text-amber-700 uppercase tracking-wider">Transaction Summary</span>
+            </div>
             <div className="flex justify-between items-center">
               <span className="text-sm text-muted-foreground">Bank</span>
               <div className="flex items-center gap-2">
@@ -70,9 +81,18 @@ export function BiometricConfirmScreen({ bank, amount, narration, onNext, onBack
                 <span className="text-sm font-medium text-foreground text-right">{narration}</span>
               </div>
             )}
-            <div className="border-t border-primary/10 pt-2 flex justify-between items-center">
+            <div className="border-t border-amber-500/10 pt-2 flex justify-between items-center">
               <span className="text-sm text-muted-foreground">Transaction Fee</span>
               <span className="text-sm font-semibold text-green-600">FREE</span>
+            </div>
+          </div>
+
+          <div className="bg-primary/5 border border-primary/10 rounded-2xl p-3 mb-5">
+            <div className="flex items-start gap-2">
+              <Shield className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
+              <p className="text-xs text-muted-foreground">
+                <span className="font-semibold text-foreground">Ask the merchant</span> to place their finger on the POS terminal fingerprint sensor to confirm this transaction.
+              </p>
             </div>
           </div>
 
@@ -80,13 +100,13 @@ export function BiometricConfirmScreen({ bank, amount, narration, onNext, onBack
             <FingerprintScanner isScanning={status === "scanning"} onComplete={handleComplete} />
 
             {status === "idle" && (
-              <p className="text-sm text-muted-foreground text-center">Press the button below to authenticate</p>
+              <p className="text-sm text-muted-foreground text-center">Merchant: press below to authorize on POS terminal</p>
             )}
             {status === "scanning" && (
-              <p className="text-sm text-primary font-medium animate-pulse text-center">Hold your finger on the sensor...</p>
+              <p className="text-sm text-amber-600 font-medium animate-pulse text-center">Merchant verifying on POS terminal...</p>
             )}
             {status === "done" && (
-              <p className="text-sm text-green-600 font-semibold text-center animate-bounce-in">Fingerprint Verified!</p>
+              <p className="text-sm text-green-600 font-semibold text-center animate-bounce-in">Merchant Authorized!</p>
             )}
           </div>
 
@@ -96,14 +116,14 @@ export function BiometricConfirmScreen({ bank, amount, narration, onNext, onBack
               className="w-full gradient-primary text-white font-semibold py-4 rounded-2xl shadow-lg shadow-primary/30 hover:opacity-90 active:scale-95 transition-all duration-200 flex items-center justify-center gap-2"
             >
               <Fingerprint className="w-5 h-5" />
-              Confirm with Fingerprint
+              Merchant: Confirm Transaction
             </button>
           )}
 
           {status === "scanning" && (
-            <div className="w-full bg-primary/10 border border-primary/30 text-primary font-semibold py-4 rounded-2xl flex items-center justify-center gap-2">
-              <div className="w-4 h-4 border-2 border-primary border-t-transparent rounded-full animate-spin" />
-              Verifying Fingerprint...
+            <div className="w-full bg-amber-500/10 border border-amber-500/30 text-amber-700 font-semibold py-4 rounded-2xl flex items-center justify-center gap-2">
+              <div className="w-4 h-4 border-2 border-amber-500 border-t-transparent rounded-full animate-spin" />
+              Awaiting Merchant Biometric...
             </div>
           )}
 

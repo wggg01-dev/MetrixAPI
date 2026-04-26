@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Shield, Fingerprint, Eye, Zap } from "lucide-react";
+import { Shield, Fingerprint, Eye, CheckCircle } from "lucide-react";
 import { FaceScanner } from "../components/FaceScanner";
 
 interface AuthorizeScreenProps {
@@ -32,7 +32,7 @@ export function AuthorizeScreen({ onNext }: AuthorizeScreenProps) {
         <div className="text-center mb-8">
           <div className="flex items-center justify-center gap-2 mb-4">
             <div className="w-10 h-10 gradient-primary rounded-xl flex items-center justify-center shadow-lg">
-              <Zap className="w-5 h-5 text-white" />
+              <CheckCircle className="w-5 h-5 text-white" />
             </div>
             <h1 className="text-2xl font-bold text-white tracking-tight">Smartmonie</h1>
           </div>
