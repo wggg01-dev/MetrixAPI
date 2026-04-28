@@ -148,7 +148,7 @@ export function AmountScreen({ bank, onNext, onBack }: AmountScreenProps) {
               disabled={!amount || Number(amount) < 100}
               className="w-full gradient-primary text-white font-semibold py-4 rounded-2xl shadow-lg shadow-primary/30 hover:opacity-90 active:scale-95 transition-all duration-200 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100"
             >
-              Confirm with Biometric
+              Proceed to Payment
               <ChevronRight className="w-5 h-5" />
             </button>
           </div>

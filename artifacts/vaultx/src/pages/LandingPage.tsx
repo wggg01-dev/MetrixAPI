@@ -36,9 +36,9 @@ const staggerContainer = {
 const codeSnippet = `// Initiate Biometric Payment
 const response = await vaultx.payment.initiate({
   amount: 450.00,
-  currency: 'USD',
+  currency: 'NGN',
   merchant_id: 'mer_8f92a4b1',
-  biometric_mode: 'face_and_fingerprint'
+  biometric_mode: 'face'
 });
 
 // Verify & Confirm

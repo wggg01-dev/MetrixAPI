@@ -115,7 +115,7 @@ export function UserDetailsScreen({ onNext, onBack }: UserDetailsScreenProps) {
           <div className="bg-amber-50 border border-amber-200 rounded-xl p-3 mb-5 flex gap-2">
             <Shield className="w-4 h-4 text-amber-600 flex-shrink-0 mt-0.5" />
             <p className="text-xs text-amber-700">
-              Sensitive information is masked to protect your privacy. Only you can authorize payments with your biometrics.
+              Sensitive information is masked to protect your privacy. Your identity has been verified via face authentication.
             </p>
           </div>
 
