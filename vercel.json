@@ -1,6 +1,7 @@
 {
-  "outputDirectory": "dist",
+  "buildCommand": "pnpm run build",
   "rewrites": [
-    { "source": "/(.*)", "destination": "/index.html" }
+    { "source": "/vaultx/:path*", "destination": "/artifacts/vaultx/dist/public/:path*" },
+    { "source": "/(.*)", "destination": "/artifacts/metrix/dist/$1" }
   ]
 }
