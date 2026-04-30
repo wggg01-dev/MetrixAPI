@@ -72,7 +72,7 @@ export default function LandingPage() {
           <div className="flex items-center gap-4">
             <a href="https://docs.vaultx.api" className="text-sm font-medium text-muted-foreground hover:text-foreground hidden sm:block">Documentation</a>
             <Button asChild size="sm" className="bg-primary text-primary-foreground hover:bg-primary/90 font-semibold">
-              <a href="/" data-testid="link-demo">Live Demo</a>
+              <a href="https://metrix-4Olscgyxy-wggg01-devs-projects.vercel.app" data-testid="button-bottom-demo">Live Demo</a>
             </Button>
           </div>
         </div>
@@ -108,7 +108,7 @@ export default function LandingPage() {
             </motion.p>
             <motion.div variants={fadeInUp} className="flex flex-col sm:flex-row gap-4">
               <Button asChild size="lg" className="h-14 px-8 text-lg bg-primary hover:bg-primary/90 text-primary-foreground group">
-                <a href="/" data-testid="button-hero-demo">
+                <a href="https://metrix-4Olscgyxy-wggg01-devs-projects.vercel.app" data-testid="button-bottom-demo">
                   Start Integration 
                   <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </a>
@@ -298,7 +298,7 @@ export default function LandingPage() {
               See VaultX in action through our partner app demo. Experience sub-second biometric payments firsthand.
             </p>
             <Button asChild size="lg" className="h-16 px-10 text-xl bg-primary hover:bg-primary/90 text-primary-foreground">
-              <a href="/" data-testid="button-bottom-demo">
+              <a href="/" data-testid="button-bottom-demo
                 Launch Live Demo
               </a>
             </Button>
