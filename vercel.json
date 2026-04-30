@@ -1,7 +1,8 @@
-{
-  "buildCommand": "pnpm run build",
+ {
+  "installCommand": "pnpm install",
+  "buildCommand": "pnpm --filter ./artifacts/metrix build && pnpm --filter ./artifacts/vaultx build",
   "rewrites": [
-    { "source": "/vaultx/:path*", "destination": "/artifacts/vaultx/dist/public/:path*" },
+    { "source": "/vaultx/:path*", "destination": "/artifacts/vaultx/dist/:path*" },
     { "source": "/(.*)", "destination": "/artifacts/metrix/dist/$1" }
   ]
 }
