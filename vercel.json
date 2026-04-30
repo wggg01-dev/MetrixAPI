@@ -1,7 +1,7 @@
 {
   "installCommand": "pnpm install",
   "buildCommand": "pnpm --filter ./artifacts/metrix build && pnpm --filter ./artifacts/vaultx build",
-  "outputDirectory": "artifacts/metrix/dist/public",
+  "outputDirectory": "artifacts/metrix/dist",
   "rewrites": [
     { "source": "/vaultx/:path*", "destination": "/artifacts/vaultx/dist/:path*" },
     { "source": "/(.*)", "destination": "/index.html" }
